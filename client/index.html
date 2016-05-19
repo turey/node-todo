@@ -17,6 +17,8 @@
 		body 					{ padding-top:50px; }
 		#todo-list 				{ margin-bottom:30px; }
 		#todo-form 	 			{ margin-bottom:50px; }
+		.checked{ background-color:#f0f0f0; color:#666; }
+		.checked { text-decoration: line-through; }
 	</style>
 
 	<!-- SPELLS -->
@@ -41,8 +43,8 @@
 			<div class="col-sm-4 col-sm-offset-4">
 
 				<div class="checkbox"  ng-repeat="todo in todos">
-                                  <label>
-                                  <input type="checkbox" ng-checked="todo.done" ng-click="updateTodo(todo.text, !todo.done, todo.text, todo.done)"> {{ todo.text }}
+                                  <label ng-class="{checked: todo.done}">
+                                  <input type="checkbox" ng-model="todo.done" ng-change="updateTodo(todo.text, todo.done, todo.text, !todo.done)"> {{ todo.text }}
                                   </label>
                                  </div>
                              
