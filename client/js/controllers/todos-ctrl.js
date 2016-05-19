@@ -34,5 +34,17 @@ angular.module('todoController', [])
 					});
 			}
 		};
+                // UPDATE ==================================================================
+		$scope.updateTodo = function(newText, isDone, oldText, wasDone) {
+			$scope.loading = true;
 
+                        // call the update function from our service (returns a promise object)
+                        Todos.update(newText, isDone, oldText, wasDone)
+
+                        // if successful creation, call our get function to get all the new todos
+                             .success(function(data) {
+                                    $scope.loading = false;
+                                    $scope.todos = data; // assign our new list of todos
+                             });
+			};
 	}]);
