@@ -35,11 +35,11 @@ angular.module('todoController', [])
 			}
 		};
                 // UPDATE ==================================================================
-		$scope.updateTodo = function(newText, isDone, oldText, wasDone) {
+		$scope.updateTodo = function(newText, isDone, snoozed, oldText, wasDone, wasSnoozed) {
 			$scope.loading = true;
 
                         // call the update function from our service (returns a promise object)
-                        Todos.update(newText, isDone, oldText, wasDone)
+                        Todos.update(newText, isDone, snoozed, oldText, wasDone, wasSnoozed)
 
                         // if successful creation, call our get function to get all the new todos
                              .success(function(data) {
@@ -47,4 +47,26 @@ angular.module('todoController', [])
                                     $scope.todos = data; // assign our new list of todos
                              });
 			};
+                // DELETE  ==================================================================
+		$scope.deleteCompleted = function() {
+			$scope.loading = true;
+
+                        // call the update function from our service (returns a promise object)
+                        Todos.deleteCompleted()
+
+                        // if successful creation, call our get function to get all the new todos
+                             .success(function(data) {
+                                    $scope.loading = false;
+                                    $scope.todos = data; // assign our new list of todos
+                             });
+			};
+
+		//COUNTING  ==================================================================
+		$scope.countCompleted = function() {
+			return $scope.todos.filter(function(element, index, array) { return element.done; }).length;
+		};
+		$scope.countSnoozed = function() {
+			return $scope.todos.filter(function(element, index, array) { return !element.done && element.snooze; }).length;
+		};
+		
 	}]);

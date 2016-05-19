@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 
 var TodoSchema =  new mongoose.Schema({
    done: Boolean,
+   snooze: Boolean,
    text : {type : String, required: true}
 });
 

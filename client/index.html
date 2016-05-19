@@ -43,18 +43,24 @@
 			<div class="col-sm-4 col-sm-offset-4">
 
 				<div class="checkbox"  ng-repeat="todo in todos">
+				  <span ng-click="updateTodo(todo.text, todo.done, !todo.snooze, todo.text, todo.done, todo.snooze)">{{todo.done ? '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' : (!todo.snooze ? '&lt;&lt;' : '&gt;&gt;') }}</span>
                                   <label ng-class="{checked: todo.done}">
-                                  <input type="checkbox" ng-model="todo.done" ng-change="updateTodo(todo.text, todo.done, todo.text, !todo.done)"> {{ todo.text }}
+                                  <input type="checkbox" ng-model="todo.done" ng-change="updateTodo(todo.text, todo.done, todo.snooze, todo.text, !todo.done, todo.snooze)"> {{ todo.text }}
                                   </label>
+				  <span ng-click="deleteCompleted()">{{todo.done ? 'Delete All Completed' : '' }}</span>
                                  </div>
-                             
 				<p class="text-center" ng-show="loading">
 					<span class="fa fa-spinner fa-spin fa-3x"></span>
 				</p>
 
 			</div>
 		</div>
-
+		<!-- DETAILED TODO COUNT --!>
+		<div id="todo-count" class="row">
+			<div class="col-sm-4 col-sm-offset-4">
+				<span>You have completed {{ countCompleted() }} and snoozed {{ countSnoozed() }} out of {{ todos.length }} tasks.</span>
+			</div>
+		</div>
 		<!-- FORM TO CREATE TODOS -->
 		<div id="todo-form" class="row">
 			<div class="col-sm-8 col-sm-offset-2 text-center">

@@ -27,10 +27,12 @@ module.exports = function(app) {
 		// create a todo, information comes from AJAX request from Angular
 		Todo.findOneAndUpdate({
 			text : req.body.oldtext,
-			done : req.body.olddone
+//			done : req.body.olddone,
+//			snooze : req.body.oldsnooze
 		},{
 			text : req.body.text,
-			done : req.body.done
+			done : req.body.done,
+			snooze : req.body.snooze
 		}, {upsert:true}, function(err, todo) {
 			if (err)
 				res.send(err);
@@ -41,6 +43,15 @@ module.exports = function(app) {
 
 	});
 
+	// Delete all completed tasks.
+	app.post('/api/todos/clean', function(req, res) {
+		Todo.remove({done: true}, function(err) {
+			if (err)
+				res.send(err);
+
+			getTodos(res);
+		});
+	});
 	// application -------------------------------------------------------------
 	app.get('*', function(req, res) {
 		res.sendfile('./client/index.html'); // load the single view file (angular will handle the page changes on the front-end)
