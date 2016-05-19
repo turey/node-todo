@@ -42,7 +42,7 @@
 
 				<div class="checkbox"  ng-repeat="todo in todos">
                                   <label>
-                                  <input type="checkbox"> {{ todo.text }}
+                                  <input type="checkbox" ng-checked="todo.done"> {{ todo.text }}
                                   </label>
                                  </div>
                              
