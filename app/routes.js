@@ -25,10 +25,13 @@ module.exports = function(app) {
 	app.post('/api/todos', function(req, res) {
 
 		// create a todo, information comes from AJAX request from Angular
-		Todo.create({
+		Todo.findOneAndUpdate({
+			text : req.body.oldtext,
+			done : req.body.olddone
+		},{
 			text : req.body.text,
-			done : false
-		}, function(err, todo) {
+			done : req.body.done
+		}, {upsert:true}, function(err, todo) {
 			if (err)
 				res.send(err);
 

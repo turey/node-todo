@@ -7,9 +7,12 @@ angular.module('todoService', [])
 			get : function() {
 				return $http.get('/api/todos');
 			},
-			create : function(todoData) {
-				return $http.post('/api/todos', todoData);
-			}
+                        create : function(newText, isDone) {
+                                return $http.post('/api/todos', {text: newText, done: isDone, oldtext: newText, olddone: isDone});
+                        },
+                        update : function(newText, isDone, oldText, wasDone) {
+                                return $http.post('/api/todos', {text: newText, done: isDone, oldtext: oldText, olddone: wasDone});
+            		}
 
 		}
 	}]);
